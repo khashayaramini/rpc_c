@@ -18,10 +18,15 @@ RPC_FUNC_DEF(my_sub)
     RPC_RETURN(int, result);
 }
 
-RPC_FUNC_ARRAY
-{
+struct {
+    void (*fp)(void **args, void *res);
+    const char * name;
+} func_array[] = {
     RPC_FUNC_INC(my_add)
     RPC_FUNC_INC(my_sub)
 };
+
+int func_array_size = 2;
+
 
 #endif // FUNCTIONS_H

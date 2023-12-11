@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "macros.h"
 #include <cstring>
 #include <string>
 #include <sys/socket.h>
@@ -77,7 +78,7 @@ int main(int argc, char *argv[]){
             args[i - 1] = new int(atoi(v[i].c_str()));
         }
 
-        for(int i = 0; i < func_array_size; i++){
+        for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
             if(strcmp(func_array[i].name, v[v.size()-1].c_str()) == 0){
                 std::cout << "name of func: " << func_array[i].name << std::endl;
                 int res;

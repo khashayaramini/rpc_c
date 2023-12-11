@@ -1,4 +1,5 @@
 #include "functions.h"
+#include "macros.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
@@ -42,7 +43,7 @@ int main(int argc, char **argv){
     int not_done = 1;
     while(not_done){
         std::cout << "Available remote functions:" << std::endl;
-        for(int i = 0; i < func_array_size; i++){
+        for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
             std::cout << func_array[i].name << std::endl;
         }
         char message[INPUT_SIZE];

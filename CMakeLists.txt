@@ -16,10 +16,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_executable(rpc_server
   main.cpp
   functions.h
+  macros.h
 )
 add_executable(rpc_client
   client.cpp
   functions.h
+  macros.h
 )
 # target_link_libraries(rpc Qt${QT_VERSION_MAJOR}::Core)
 
