@@ -11,8 +11,8 @@
 int main(int argc, char **argv){
     int status, valread, client_fd;
     struct sockaddr_in serv_addr;
-    std::string message_string = "2;2;3;my_add"; // num of args, args, func name
-    const char* message = message_string.c_str();
+    std::string end_message_string = "end"; // num of args, args, func name
+    const char* end_message = end_message_string.c_str();
     char buffer[BUFFER_SIZE] = { 0 };
     if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         printf("\n Socket creation error \n");
@@ -36,5 +36,22 @@ int main(int argc, char **argv){
         printf("\nConnection Failed \n");
         return -1;
     }
-    send(client_fd, message, strlen(message), 0);
+
+    int not_done = 1;
+    while(not_done){
+        std::cout << "Available remote functions:" << std::endl;
+        for(int i = 0; i < func_array_size; i++){
+            std::cout << func_array[i].name << std::endl;
+        }
+        char message[256];
+        std::cin.getline (message, 256); 
+
+        send(client_fd, message, strlen(message), 0);
+        valread = read(client_fd, buffer, BUFFER_SIZE - 1);
+        int res = atoi(buffer);
+        memset(buffer, 0, BUFFER_SIZE);
+        if(strcmp(message, "end") == 0)
+            return 0;
+        std::cout << res << std::endl;
+    }
 }

@@ -9,14 +9,16 @@
 //     void *val;
 // } func_arg_t;
 
-void my_add(void **args){
+void my_add(void **args, void *res){
     int i1 = *reinterpret_cast<int*>(args[0]);
     int i2 = *reinterpret_cast<int*>(args[1]);
-    std::cout << "answer: " << i1 + i2 << "\n";
+    int result = i1 + i2;
+    std::cout << "answer: " << result << "\n";
+    *(int *)res = result;
 }
 
 struct {
-    void (*fp)(void **args);
+    void (*fp)(void **args, void *res);
     const char * name;
 } func_array[] = {
     FUNC_DEF(my_add)
