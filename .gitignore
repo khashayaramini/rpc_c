@@ -32,10 +32,6 @@ qrc_*.cpp
 Thumbs.db
 *.res
 *.rc
-/.qmake.cache
-/.qmake.stash
-/bin
-/.cmake
 
 # qtcreator generated files
 *.pro.user*
@@ -75,3 +71,8 @@ CMakeLists.txt.user*
 *.exe
 CMakeCache.txt
 /CMakeFiles
+/.qmake.cache
+/.qmake.stash
+/bin/
+/.cmake/
+*.json
