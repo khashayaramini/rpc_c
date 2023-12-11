@@ -1,4 +1,0 @@
-/home/raven/Documents/rpc_c++/CMakeFiles/rpc_server.dir
-/home/raven/Documents/rpc_c++/CMakeFiles/rpc_client.dir
-/home/raven/Documents/rpc_c++/CMakeFiles/edit_cache.dir
-/home/raven/Documents/rpc_c++/CMakeFiles/rebuild_cache.dir
