@@ -1,0 +1,27 @@
+#ifndef FUNCTIONS_H
+#define FUNCTIONS_H
+
+#include <iostream>
+
+#define FUNC_DEF(func) { &func, #func },
+
+// typedef struct func_arg{
+//     void *val;
+// } func_arg_t;
+
+void my_add(void **args){
+    int i1 = *reinterpret_cast<int*>(args[0]);
+    int i2 = *reinterpret_cast<int*>(args[1]);
+    std::cout << "answer: " << i1 + i2 << "\n";
+}
+
+struct {
+    void (*fp)(void **args);
+    const char * name;
+} func_array[] = {
+    FUNC_DEF(my_add)
+};
+
+int func_array_size = 1;
+
+#endif // FUNCTIONS_H
