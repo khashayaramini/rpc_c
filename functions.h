@@ -1,28 +1,29 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
+#include "macros.h"
 
-#define FUNC_DEF(func) { &func, #func },
-
-void my_add(void **args, void *res){
-    int i1 = *reinterpret_cast<int*>(args[0]);
-    int i2 = *reinterpret_cast<int*>(args[1]);
+RPC_FUNC_DEF(my_add)
+{
+    RPC_GET_ARG(int, i1, 0);
+    RPC_GET_ARG(int, i2, 1);
     int result = i1 + i2;
-    *(int *)res = result;
+    RPC_RETURN(int, result);
 }
 
-void my_sub(void **args, void *res){
-    int i1 = *reinterpret_cast<int*>(args[0]);
-    int i2 = *reinterpret_cast<int*>(args[1]);
+RPC_FUNC_DEF(my_sub)
+{
+    RPC_GET_ARG(int, i1, 0);
+    RPC_GET_ARG(int, i2, 1);
     int result = i1 - i2;
-    *(int *)res = result;
+    RPC_RETURN(int, result);
 }
 
 struct {
     void (*fp)(void **args, void *res);
     const char * name;
 } func_array[] = {
-    FUNC_DEF(my_add)
-    FUNC_DEF(my_sub)
+    RPC_FUNC_INC(my_add)
+    RPC_FUNC_INC(my_sub)
 };
 
 int func_array_size = 2;

@@ -9,6 +9,7 @@
 #include <iostream>
 #define PORT 6666
 #define BUFFER_SIZE 1024
+#define INPUT_SIZE 256
 int main(int argc, char **argv){
     int status, valread, client_fd;
     struct sockaddr_in serv_addr;
@@ -44,8 +45,8 @@ int main(int argc, char **argv){
         for(int i = 0; i < func_array_size; i++){
             std::cout << func_array[i].name << std::endl;
         }
-        char message[256];
-        std::cin.getline (message, 256); 
+        char message[INPUT_SIZE];
+        std::cin.getline (message, INPUT_SIZE); 
 
         send(client_fd, message, strlen(message), 0);
         valread = read(client_fd, buffer, BUFFER_SIZE - 1);
