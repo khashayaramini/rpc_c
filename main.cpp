@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <vector>
 #include <sstream>
+#include <iostream>
 #define PORT 6666
 #define BUFFER_SIZE 1024
 
