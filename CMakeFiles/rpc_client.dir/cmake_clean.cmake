@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/rpc_client.dir/client.cpp.o"
   "CMakeFiles/rpc_client.dir/client.cpp.o.d"
-  "rpc_client"
-  "rpc_client.pdb"
+  "bin/rpc_client"
+  "bin/rpc_client.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
