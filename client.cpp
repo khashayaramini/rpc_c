@@ -58,8 +58,9 @@ int main(int argc, char **argv){
 
         send(client_fd, message, INPUT_SIZE, 0);
         valread = read(client_fd, buffer, BUFFER_SIZE - 1);
+		printf("%d\n", *reinterpret_cast<int*>(buffer));
         memset(buffer, 0, BUFFER_SIZE);
-        if(strcmp(message, "end") == 0)
+        // if(strcmp(message, "end") == 0)
             return 0;
     }
 }

@@ -36,10 +36,7 @@ RPC_FUNC_DEF(my_test1)
     double j = ar.j;
 	printf("%d\n", i);
 	printf("%f\n", j);
-	// test_struct_t *i_name = reinterpret_cast<test_struct_t*>(arg);
 	printf("%s\n", ar.name);
-	// std::string name(ar.name);
-	// printf("%s\n", i_name->name);
     RPC_RETURN(int, ar.i);
 }
 

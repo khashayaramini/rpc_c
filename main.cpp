@@ -75,14 +75,15 @@ int main(int argc, char *argv[]){
 			auto the_func = func_array[i]; 
             if(strcmp(the_func.name, v[0].c_str()) == 0){
                 std::cout << "name of func: " << func_array[i].name << std::endl;
-                unsigned char arg[1024];
-				memcpy(arg, buffer + v[0].size() + 1, 512);
-                unsigned char res[1024];
+                unsigned char arg[BUFFER_SIZE];
+				memcpy(arg, buffer + v[0].size() + 1, BUFFER_SIZE - (v[0].size() + 1));
+                unsigned char res[BUFFER_SIZE];
                 the_func.fp((void *)&arg, (void *)&res);
 
-				printf(" return is %d \n", *reinterpret_cast<int*>(res));
+				send(new_socket, res, BUFFER_SIZE, 0);
 				
                 memset(buffer, 0, BUFFER_SIZE);
+                memset(res, 0, BUFFER_SIZE);
             }
         }
     }
