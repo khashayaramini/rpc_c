@@ -1,9 +1,10 @@
 #include "functions.h"
 #include "macros.h"
+#include <cstring>
+#include <string>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <string.h>
@@ -47,14 +48,18 @@ int main(int argc, char **argv){
             std::cout << func_array[i].name << std::endl;
         }
         char message[INPUT_SIZE];
-        std::cin.getline (message, INPUT_SIZE); 
+		int e = 2;
+		test_struct_t my_struct = (test_struct_t){.i = 7, .j = 3.14, .name = {'y', 'o', 'l', 'o', '\0'}};
+		unsigned char* my_s_bytes = reinterpret_cast<unsigned char*>(&my_struct);
+		std::string func_name = "my_test1";
+		std::strcpy(message, func_name.c_str());
+		message[func_name.length()] = ';';
+		std::memcpy(message + func_name.length() + 1, &my_struct, sizeof(my_struct));
 
-        send(client_fd, message, strlen(message), 0);
+        send(client_fd, message, INPUT_SIZE, 0);
         valread = read(client_fd, buffer, BUFFER_SIZE - 1);
-        int res = atoi(buffer);
         memset(buffer, 0, BUFFER_SIZE);
         if(strcmp(message, "end") == 0)
             return 0;
-        std::cout << res << std::endl;
     }
 }

@@ -66,30 +66,25 @@ int main(int argc, char *argv[]){
     }
     int not_done = 1;
     while(not_done){
-        valread = read(new_socket, buffer, BUFFER_SIZE - 1);
-        // sleep(1);
+        valread = read(new_socket, buffer, BUFFER_SIZE);
         if(strcmp("end", buffer) == 0)
             not_done = 0;
         printf("%s\n", buffer);
         std::vector<std::string> v = split (buffer, ';');
-        void *args[atoi(v[0].c_str())];
-
-        for(int i = 1; i < v.size() - 1; i++){
-            args[i - 1] = new int(atoi(v[i].c_str()));
-        }
-
         for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
-            if(strcmp(func_array[i].name, v[v.size()-1].c_str()) == 0){
+			auto the_func = func_array[i]; 
+            if(strcmp(the_func.name, v[0].c_str()) == 0){
                 std::cout << "name of func: " << func_array[i].name << std::endl;
-                int res;
-                func_array[i].fp(args, (void *)&res);
-                std::cout << res << std::endl;
-                const char *res_message = std::to_string(res).c_str();
-                send(new_socket, res_message, strlen(res_message), 0);
+                unsigned char arg[1024];
+				memcpy(arg, buffer + v[0].size() + 1, 512);
+                unsigned char res[1024];
+                the_func.fp((void *)&arg, (void *)&res);
+
+				printf(" return is %d \n", *reinterpret_cast<int*>(res));
+				
                 memset(buffer, 0, BUFFER_SIZE);
             }
         }
-
     }
     return 0;
 }

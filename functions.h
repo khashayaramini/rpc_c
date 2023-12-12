@@ -1,25 +1,52 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include "macros.h"
+#include <cstdio>
+#include <string>
+
+typedef struct test_struct 
+{
+	int i;
+	double j;
+	char name[16];
+} test_struct_t;
 
 RPC_FUNC_DEF(my_add)
 {
-    RPC_GET_ARG(int, i1, 0);
-    RPC_GET_ARG(int, i2, 1);
+    RPC_GET_ARG(int*, ar);
+	int i1 = ar[0];
+	int i2 = ar[1];
     int result = i1 + i2;
     RPC_RETURN(int, result);
 }
 
 RPC_FUNC_DEF(my_sub)
 {
-    RPC_GET_ARG(int, i1, 0);
-    RPC_GET_ARG(int, i2, 1);
+    RPC_GET_ARG(int*, ar);
+	int i1 = ar[0];
+	int i2 = ar[1];
     int result = i1 - i2;
     RPC_RETURN(int, result);
 }
 
+RPC_FUNC_DEF(my_test1)
+{
+    RPC_GET_ARG(test_struct_t, ar);
+    int i = ar.i;
+    double j = ar.j;
+	printf("%d\n", i);
+	printf("%f\n", j);
+	// test_struct_t *i_name = reinterpret_cast<test_struct_t*>(arg);
+	printf("%s\n", ar.name);
+	// std::string name(ar.name);
+	// printf("%s\n", i_name->name);
+    RPC_RETURN(int, ar.i);
+}
+
+
 RPC_FUNC_ARRAY
 {
+    RPC_FUNC_INC(my_test1)
     RPC_FUNC_INC(my_add)
     RPC_FUNC_INC(my_sub)
 };
