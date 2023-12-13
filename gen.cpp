@@ -12,7 +12,7 @@ int generateClientStub(string fileName){
                 "#include <iostream>\n"
                 "#include <sys/socket.h>\n"
                 "#include <unistd.h>\n"
-                "#include <string.h>\n using namespace std;\n#define BUFFER_SIZE 1024\n";
+                "#include <string.h>\n using namespace std;\n#define BUFFER_SIZE 1024\n#define INPUT_SIZE 256\n";
 
 
     clientStub << "int createClientConn(char ip_addr[30], int port_num){\n"
@@ -39,15 +39,19 @@ int generateClientStub(string fileName){
     "}\n\n";
     
     for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
-        clientStub << "int " << func_array[i].name << " (char * args, int clientSocket){\n"
-        "\tstrcat(args, \";" << func_array[i].name << "\");\n"
-        "\tsend(clientSocket, args, strlen(args), 0);\n"
-        "\tchar buffer[BUFFER_SIZE] = { 0 };\n"
+        clientStub << "void " << func_array[i].name << " (void * my_struct, void *res, int clientSocket){\n"
         "\tint valread;\n"
+        "\tchar buffer[BUFFER_SIZE] = { 0 };\n"
+        "\tchar message[INPUT_SIZE];\n"
+        "\tunsigned char* my_s_bytes = reinterpret_cast<unsigned char*>(my_struct);\n"
+		"\tstd::string func_name = \""<< func_array[i].name <<"\";\n"
+		"\tstd::strcpy(message, func_name.c_str());\n"
+		"\tmessage[func_name.length()] = ';';\n"
+		"\tstd::memcpy(message + func_name.length() + 1, my_struct, INPUT_SIZE - func_name.length());\n"
+
+        "\tsend(clientSocket, message, INPUT_SIZE, 0);\n"
         "\tvalread = read(clientSocket, buffer, BUFFER_SIZE - 1);\n"
-        "\tint res = atoi(buffer);\n"
-        "\treturn res;\n"
-        "}\n";
+        "}\n\n";
 
     }
 
@@ -58,7 +62,6 @@ int generateClientStub(string fileName){
 
 
 int main() {
-    //parseDef("def.txt");
     generateClientStub("client_stub");
 
     return 0;

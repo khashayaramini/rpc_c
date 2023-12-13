@@ -11,11 +11,16 @@ typedef struct test_struct
 	char name[16];
 } test_struct_t;
 
+typedef struct nums {
+    int num1;
+    int num2;
+} nums;
+
 RPC_FUNC_DEF(my_add)
 {
-    RPC_GET_ARG(int*, ar);
-	int i1 = ar[0];
-	int i2 = ar[1];
+    RPC_GET_ARG(nums, mynums);
+	int i1 = mynums.num1;
+	int i2 = mynums.num2;
     int result = i1 + i2;
     RPC_RETURN(int, result);
 }
