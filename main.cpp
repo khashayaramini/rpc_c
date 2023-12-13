@@ -32,7 +32,6 @@ int main(int argc, char *argv[]){
     struct sockaddr_in address;
     int opt = 1;
     socklen_t addrlen = sizeof(address);
-    char buffer[BUFFER_SIZE] = { 0 };
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("socket failed");
         exit(EXIT_FAILURE);
@@ -66,10 +65,13 @@ int main(int argc, char *argv[]){
     }
     int not_done = 1;
     while(not_done){
+		char buffer[BUFFER_SIZE] = { 0 };
         valread = read(new_socket, buffer, BUFFER_SIZE);
         if(strcmp("end", buffer) == 0)
             not_done = 0;
-        printf("%s\n", buffer);
+		if(buffer[0] == 0)
+			continue;
+        printf("buffer is: %s\n", buffer);
         std::vector<std::string> v = split (buffer, ';');
         for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
 			auto the_func = func_array[i]; 
@@ -84,6 +86,7 @@ int main(int argc, char *argv[]){
 				
                 memset(buffer, 0, BUFFER_SIZE);
                 memset(res, 0, BUFFER_SIZE);
+                memset(arg, 0, BUFFER_SIZE);
             }
         }
     }

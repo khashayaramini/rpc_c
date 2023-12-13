@@ -11,7 +11,7 @@ typedef struct test_struct
 	char name[16];
 } test_struct_t;
 
-typedef struct nums {
+typedef struct nums_struct {
     int num1;
     int num2;
 } nums;
