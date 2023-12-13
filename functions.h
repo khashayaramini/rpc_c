@@ -39,18 +39,15 @@ RPC_FUNC_DEF(my_test1)
     RPC_GET_ARG(test_struct_t, ar);
     int i = ar.i;
     double j = ar.j;
-	printf("%d\n", i);
-	printf("%f\n", j);
-	printf("%s\n", ar.name);
-    RPC_RETURN(int, ar.i);
+    RPC_RETURN(double, ar.j);
 }
 
 
 RPC_FUNC_ARRAY
 {
-    RPC_FUNC_INC(my_test1)
-    RPC_FUNC_INC(my_add)
-    RPC_FUNC_INC(my_sub)
+    RPC_FUNC_INC(my_test1, "double")
+    RPC_FUNC_INC(my_add, "int")
+    RPC_FUNC_INC(my_sub, "int")
 };
 
 #endif // FUNCTIONS_H

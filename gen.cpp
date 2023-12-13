@@ -39,7 +39,7 @@ int generateClientStub(string fileName){
     "}\n\n";
     
     for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
-        clientStub << "void " << func_array[i].name << " (void * my_struct, void *res, int clientSocket){\n"
+        clientStub << func_array[i].type << " " << func_array[i].name << " (void * my_struct, void *res, int clientSocket){\n"
         "\tint valread;\n"
         "\tchar buffer[BUFFER_SIZE] = { 0 };\n"
         "\tchar message[INPUT_SIZE];\n"
@@ -50,7 +50,8 @@ int generateClientStub(string fileName){
 		"\tstd::memcpy(message + func_name.length() + 1, my_struct, INPUT_SIZE - func_name.length());\n"
 
         "\tsend(clientSocket, message, INPUT_SIZE, 0);\n"
-        "\tvalread = read(clientSocket, res, BUFFER_SIZE - 1);\n"
+        "\tvalread = read(clientSocket, buffer, BUFFER_SIZE - 1);\n"
+        "\treturn *reinterpret_cast<" << func_array[i].type << "*>(buffer);\n" 
         "}\n\n";
 
     }
