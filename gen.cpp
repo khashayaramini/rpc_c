@@ -50,7 +50,7 @@ int generateClientStub(string fileName){
 		"\tstd::memcpy(message + func_name.length() + 1, my_struct, INPUT_SIZE - func_name.length());\n"
 
         "\tsend(clientSocket, message, INPUT_SIZE, 0);\n"
-        "\tvalread = read(clientSocket, buffer, BUFFER_SIZE - 1);\n"
+        "\tvalread = read(clientSocket, res, BUFFER_SIZE - 1);\n"
         "}\n\n";
 
     }

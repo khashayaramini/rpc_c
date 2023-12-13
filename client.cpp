@@ -21,30 +21,29 @@ int main(int argc, char **argv){
     char buffer[BUFFER_SIZE] = { 0 };
     int client_fd = createClientConn("127.0.0.1", PORT);
 
-    int not_done = 1;
-        std::cout << "Available remote functions:" << std::endl;
-        for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
-            std::cout << func_array[i].name << std::endl;
-        }
-        char message[INPUT_SIZE];
-		int e = 2;
-		test_struct_t my_struct = (test_struct_t){.i = 7, .j = 3.14, .name = {'y', 'o', 'l', 'o', '\0'}};
-        nums mynums = (nums){.num1 = 5, .num2 = 6};
-        int res;
-        //my_test1(&my_struct, buffer, client_fd);
-        my_add(&mynums, buffer, client_fd);
-        printf("%d\n", *reinterpret_cast<int*>(buffer));
+    /* std::cout << "Available remote functions:" << std::endl;
+    for(int i = 0; i < RPC_FUNC_ARRAY_SIZE; i++){
+        std::cout << func_array[i].name << std::endl;
+    } */
+    char message[INPUT_SIZE];
+    int e = 2;
+    test_struct_t my_struct = (test_struct_t){.i = 7, .j = 3.14, .name = {'y', 'o', 'l', 'o', '\0'}};
+    nums mynums = (nums){.num1 = 5, .num2 = 6};
+    int res;
+    //my_test1(&my_struct, buffer, client_fd);
+    my_add(&mynums, buffer, client_fd);
+    printf("result in main %d\n", *reinterpret_cast<int*>(buffer));
 
-		/* unsigned char* my_s_bytes = reinterpret_cast<unsigned char*>(&my_struct);
-		std::string func_name = "my_test1";
-		std::strcpy(message, func_name.c_str());
-		message[func_name.length()] = ';';
-		std::memcpy(message + func_name.length() + 1, &my_struct, sizeof(my_struct));
+    /* unsigned char* my_s_bytes = reinterpret_cast<unsigned char*>(&my_struct);
+    std::string func_name = "my_test1";
+    std::strcpy(message, func_name.c_str());
+    message[func_name.length()] = ';';
+    std::memcpy(message + func_name.length() + 1, &my_struct, sizeof(my_struct));
 
-        send(client_fd, message, INPUT_SIZE, 0);
-        valread = read(client_fd, buffer, BUFFER_SIZE - 1);
-		printf("%d\n", *reinterpret_cast<int*>(buffer));
-        memset(buffer, 0, BUFFER_SIZE); */
-        // if(strcmp(message, "end") == 0)
-            return 0;
+    send(client_fd, message, INPUT_SIZE, 0);
+    valread = read(client_fd, buffer, BUFFER_SIZE - 1);
+    printf("%d\n", *reinterpret_cast<int*>(buffer));
+    memset(buffer, 0, BUFFER_SIZE); */
+    // if(strcmp(message, "end") == 0)
+        return 0;
 }
