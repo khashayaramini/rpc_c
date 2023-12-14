@@ -1,8 +1,6 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 #include "macros.h"
-#include <cstdio>
-#include <string>
 
 typedef struct test_struct 
 {
